@@ -1,8 +1,28 @@
+#pragma once
+
 #include <iostream>
 #include <sstream>
+#include <vector>
+#include "OrderBookEntry.h"
+#include "menu.h"
 using namespace std;
 
-void printMenu() {
+
+MainMenu::MainMenu() {
+
+}
+
+void MainMenu::init() {
+    loadOrderBook();
+    int input;
+    while (true) {
+        printMenu();
+        input = getUserOption();
+        processUserOption(input);
+    }
+}
+
+void MainMenu::printMenu() {
     std::cout << "1: Print help" << endl;
     std::cout << "2: Print exchange stats" << endl;
     std::cout << "3: Make an offer" << endl;
@@ -11,44 +31,50 @@ void printMenu() {
     std::cout << "6: Continue" << endl;
     std::cout << "=======================" << endl;
     std::cout << "Type in 1-6" << endl;
+    return;
 }
 
-void printHelp() {
+void MainMenu::loadOrderBook() {
+    OrderBookEntry order("2020/03/17 17:01:24.884492","ETH/BTC",OrderBookType::bid,0.02186299,0.1);
+    orderVec.push_back(order);
+}
+
+void MainMenu::printHelp() {
     std::cout << "Your aim is to make money. Analyze the market and make bids and offers." << endl;
 }
 
-void printMarketStats() {
-    std::cout << "Market looks good!" << endl;
+void MainMenu::printMarketStats() {
+    std::cout << "OrderBook contains: " << orderVec.size() << "entries" << endl;
 }
 
-void enterOffer() {
+void MainMenu::enterOffer() {
     std::cout << "Make an offer - enter the amount" << endl;
 }
 
-void enterBid() {
+void MainMenu::enterBid() {
     std::cout << "Make a bid - enter the amount" << endl;
 }
 
-void printWallet() {
+void MainMenu::printWallet() {
     std::cout << "Your wallet is empty" << endl;
 }
 
-void gotoNextTimeframe() {
+void MainMenu::gotoNextTimeframe() {
     std::cout << "Going to next timeframe" << endl;
 }
 
-int getUserOption() {
+int MainMenu::getUserOption() {
     string input;
     int ans;
     
     std::cin >> input;
-    std::stringstream strm(input);
+    std::stringstream ss(input);
     
-    strm >> ans;
+    ss >> ans;
     return ans;
 }
 
-void processUserOption(int userOption) {
+void MainMenu::processUserOption(int userOption) {
     switch (userOption) {
         case 1:
             printHelp();
@@ -71,13 +97,4 @@ void processUserOption(int userOption) {
         default:
             return;
     };
-}
-
-int main() {
-    while (true) {
-        printMenu();
-        long userOption = getUserOption();
-        processUserOption(userOption);       
-    }
-    return 0;
 }
