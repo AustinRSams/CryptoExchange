@@ -1,12 +1,9 @@
-#pragma once
 
 #include <iostream>
 #include <sstream>
 #include <vector>
 #include "OrderBookEntry.h"
 #include "menu.h"
-using namespace std;
-
 
 MainMenu::MainMenu() {
 
@@ -44,7 +41,7 @@ void MainMenu::printHelp() {
 }
 
 void MainMenu::printMarketStats() {
-    std::cout << "OrderBook contains: " << orderVec.size() << "entries" << endl;
+    std::cout << "OrderBook contains: " << orderVec.size() << " entries" << endl;
 }
 
 void MainMenu::enterOffer() {
