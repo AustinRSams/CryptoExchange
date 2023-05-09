@@ -1,5 +1,7 @@
+#pragma once
+
 #include <vector>
-#include "OrderBookEntry.h"
+#include "orderBookEntry.h"
 
 class MainMenu {
     public:
@@ -18,5 +20,5 @@ class MainMenu {
         void gotoNextTimeframe();
         int getUserOption();
         void processUserOption(int userOption);
-        std::vector<OrderBookEntry> orderVec;
+        std::vector<orderBookEntry> orderVec;
 };

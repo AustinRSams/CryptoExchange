@@ -2,7 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include "OrderBookEntry.h"
+#include "orderBookEntry.h"
 #include "menu.h"
 
 MainMenu::MainMenu() {
@@ -32,7 +32,7 @@ void MainMenu::printMenu() {
 }
 
 void MainMenu::loadOrderBook() {
-    OrderBookEntry order("2020/03/17 17:01:24.884492","ETH/BTC",OrderBookType::bid,0.02186299,0.1);
+    orderBookEntry order("2020/03/17 17:01:24.884492","ETH/BTC",orderBookType::bid,0.02186299,0.1);
     orderVec.push_back(order);
 }
 

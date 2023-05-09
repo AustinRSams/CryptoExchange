@@ -6,16 +6,16 @@
 #include <vector>
 using namespace std;
 
-enum class OrderBookType {
+enum class orderBookType {
     bid,
     ask,
 };
 
-class OrderBookEntry {
+class orderBookEntry {
 
     public:
 
-        OrderBookEntry(std::string _timestamp, std::string product,  OrderBookType _type, double _price, double _quantity);
+        orderBookEntry(std::string _timestamp, std::string product,  orderBookType _type, double _price, double _quantity);
         
         // Getters
         double getPrice() {
@@ -30,7 +30,7 @@ class OrderBookEntry {
         string getProduct() {
             return product;
         }
-        OrderBookType getType() {
+        orderBookType getType() {
             return type;
         }
 
@@ -49,14 +49,14 @@ class OrderBookEntry {
         void setProduct(string u) {
             product = u;
         }
-        void setOrderBookType(OrderBookType t) {
+        void setorderBookType(orderBookType t) {
             type = t;
         }
 
     private:
         string timestamp;
         string product;
-        OrderBookType type;
+        orderBookType type;
         double price;
         double qty;
 };
