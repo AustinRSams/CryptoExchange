@@ -3,14 +3,17 @@
 #include <sstream>
 #include <vector>
 #include "orderBookEntry.h"
+#include "orderBook.h"
 #include "menu.h"
+#include "csvReader.h"
 
 MainMenu::MainMenu() {
 
 }
 
 void MainMenu::init() {
-    loadOrderBook();
+
+    currentTime = orderBook.getEarliestTime();
     int input;
     while (true) {
         printMenu();
@@ -20,48 +23,50 @@ void MainMenu::init() {
 }
 
 void MainMenu::printMenu() {
-    std::cout << "1: Print help" << endl;
-    std::cout << "2: Print exchange stats" << endl;
-    std::cout << "3: Make an offer" << endl;
-    std::cout << "4: Make a bid" << endl;
-    std::cout << "5: Print wallet" << endl;
-    std::cout << "6: Continue" << endl;
-    std::cout << "=======================" << endl;
-    std::cout << "Type in 1-6" << endl;
+    std::cout << "1: Print help" << std::endl;
+    std::cout << "2: Print exchange stats" << std::endl;
+    std::cout << "3: Make an offer" << std::endl;
+    std::cout << "4: Make a bid" << std::endl;
+    std::cout << "5: Print wallet" << std::endl;
+    std::cout << "6: Continue" << std::endl;
+    std::cout << "=======================" << std::endl;
+    std::cout << "Current time is: " << MainMenu::currentTime << std::endl;
+    std::cout << "Type in 1-6" << std::endl;
     return;
 }
 
-void MainMenu::loadOrderBook() {
-    orderBookEntry order("2020/03/17 17:01:24.884492","ETH/BTC",orderBookType::bid,0.02186299,0.1);
-    orderVec.push_back(order);
-}
-
 void MainMenu::printHelp() {
-    std::cout << "Your aim is to make money. Analyze the market and make bids and offers." << endl;
+    std::cout << "Your aim is to make money. Analyze the market and make bids and offers." << std::endl;
 }
 
 void MainMenu::printMarketStats() {
-    std::cout << "OrderBook contains: " << orderVec.size() << " entries" << endl;
+    for (std::string const& p : orderBook.getKnownProducts()) {
+        std::cout << "Product: " << p << std::endl;
+        std::vector<orderBookEntry> entries = orderBook.getOrders(orderBookType::ask, p, currentTime);
+        std::cout << "Asks seen: " << entries.size() << std::endl;
+        std::cout << "Min ask " << orderBook::getLowPrice(entries) << std::endl;
+    }
 }
 
 void MainMenu::enterOffer() {
-    std::cout << "Make an offer - enter the amount" << endl;
+    std::cout << "Make an offer - enter the amount" << std::endl;
 }
 
 void MainMenu::enterBid() {
-    std::cout << "Make a bid - enter the amount" << endl;
+    std::cout << "Make a bid - enter the amount" << std::endl;
 }
 
 void MainMenu::printWallet() {
-    std::cout << "Your wallet is empty" << endl;
+    std::cout << "Your wallet is empty" << std::endl;
 }
 
 void MainMenu::gotoNextTimeframe() {
-    std::cout << "Going to next timeframe" << endl;
+    std::cout << "Going to next timeframe..." << std::endl;
+    currentTime = orderBook.getNextTime(currentTime);
 }
 
 int MainMenu::getUserOption() {
-    string input;
+    std::string input;
     int ans;
     
     std::cin >> input;

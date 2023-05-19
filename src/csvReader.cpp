@@ -9,13 +9,26 @@
 csvReader::csvReader() {
     
 }
+
 std::vector<orderBookEntry> csvReader::readCSV(std::string csvFile) {
     std::vector<orderBookEntry> entries;
+    std::ifstream file{csvFile};
+    std::string line;
 
+    if (file.is_open()) {
+        while(std::getline(file, line)) {
+            try {
+                orderBookEntry obe = strs_to_OBE(tokenize(line, ','));
+                entries.push_back(obe);
+            } catch (const std::exception& e) {
+                std::cout << "Bad data!" << line << std::endl;
+            }
+        }
+    }
     return entries;
 }
-std::vector<string> csvReader::tokenize(std::string csvLine, char delimitor) {
-    std::vector<string> tokens;
+std::vector<std::string> csvReader::tokenize(std::string csvLine, char delimitor) {
+    std::vector<std::string> tokens;
     std::string t;
     signed int start, end;
     start = csvLine.find_first_not_of(delimitor, 0);
@@ -26,21 +39,34 @@ std::vector<string> csvReader::tokenize(std::string csvLine, char delimitor) {
         if (start == csvLine.length() || start == end) {
             break;
         }
-        // We've founda token
+        // We've found a token
         if (end >= 0) {
             t = csvLine.substr(start, end - start);
         }
         else {
-            t = csvLine.substr (start, csvLine.length() - start);
+            t = csvLine.substr(start, csvLine.length() - start);
         }
         tokens.push_back(t);
         start = end + 1;
-    }
-     while (end != std::string::npos);
+    } while (end != std::string::npos);
     return tokens;
 }
-orderBookEntry csvReader::stringsToOBE(std::vector<std::string> strings) {
-    orderBookEntry obe{"","",orderBookType::bid,0,0};
+
+orderBookEntry csvReader::strs_to_OBE(std::vector<std::string> tokens) {
+    double price, amount;
+    orderBookType type;
+    if (tokens.size() != 5) {
+        std::cout << "Bad line" << std::endl;
+        throw std::exception{};
+    }
+    try {
+        price = std::stod(tokens[3]);
+        amount = std::stod(tokens[4]);
+    }
+    catch (const std::exception& e) {
+
+    }
+    orderBookEntry obe{tokens[0], tokens[1], orderBookEntry::str_to_OBE_type(tokens[2]), price, amount};
 
     return obe;
 }

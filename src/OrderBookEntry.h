@@ -4,58 +4,34 @@
 #include <sstream>
 #include <string>
 #include <vector>
-using namespace std;
 
 enum class orderBookType {
     bid,
     ask,
+    max_obe_num,
 };
 
 class orderBookEntry {
 
     public:
 
-        orderBookEntry(std::string _timestamp, std::string product,  orderBookType _type, double _price, double _quantity);
+        orderBookEntry(std::string _timestamp, std::string _product, orderBookType _type, double _price, double _quantity);
+        
+        /** 
+         * Converts a string into an orderBookEntry type 
+         */
+        static orderBookType str_to_OBE_type(std::string& s);
         
         // Getters
-        double getPrice() {
-            return price;
-        }
-        double getQty() {
-            return qty;
-        }
-        string getTimestamp() {
-            return timestamp;
-        }
-        string getProduct() {
-            return product;
-        }
-        orderBookType getType() {
-            return type;
-        }
-
-        // Setters
-        void setPrice(double p) {
-            price = p;
-        }
-        void setQty(double q) {
-            qty = q;
-        }
-        // TODO: split date and time into separate fields
-        void setTimestamp(string ts) {
-            timestamp = ts;
-        }
-        // TODO: make enum for accepted product
-        void setProduct(string u) {
-            product = u;
-        }
-        void setorderBookType(orderBookType t) {
-            type = t;
-        }
+        double getPrice();
+        double getQty();
+        std::string getTimestamp();
+        std::string getProduct();
+        orderBookType getType();
 
     private:
-        string timestamp;
-        string product;
+        std::string timestamp;
+        std::string product;
         orderBookType type;
         double price;
         double qty;

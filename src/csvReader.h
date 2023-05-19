@@ -10,7 +10,7 @@ class csvReader {
         static std::vector<orderBookEntry> readCSV(std::string csvFile);
 
     private:
-        static std::vector<string> tokenize(std::string csvLine, char delimitor);
-        static orderBookEntry stringsToOBE(std::vector<std::string> strings);
+        static std::vector<std::string> tokenize(std::string csvLine, char delimitor);
+        static orderBookEntry strs_to_OBE(std::vector<std::string> strings);
             
 };

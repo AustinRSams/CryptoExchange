@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "orderBookEntry.h"
+#include "orderBook.h"
 
 class MainMenu {
     public:
@@ -10,7 +11,6 @@ class MainMenu {
         void init();
 
     private:
-        void loadOrderBook();
         void printMenu();
         void printHelp();
         void printMarketStats();
@@ -20,5 +20,6 @@ class MainMenu {
         void gotoNextTimeframe();
         int getUserOption();
         void processUserOption(int userOption);
-        std::vector<orderBookEntry> orderVec;
+        orderBook orderBook{"../20200317.csv"};
+        std::string currentTime;
 };
