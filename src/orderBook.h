@@ -5,8 +5,6 @@
 #include "orderBookEntry.h"
 #include "csvReader.h"
 
-using namespace std;
-
 class orderBook {
 
     public:
@@ -15,13 +13,17 @@ class orderBook {
          */
         orderBook(std::string filename);
         /** 
+         * inserts an orderBookEntry into the orderBook 
+         */
+        void insertOrder(orderBookEntry& order);
+        /** 
          * return vector of all kown products in the dataset 
          */
         std::vector<std::string> getKnownProducts();
         /** 
          * return vector of orders according to the sent filters 
          */
-        std::vector<orderBookEntry> getOrders(orderBookType type, std::string product, std::string timestamp);
+        std::vector<orderBookEntry> getOrders(orderBookEntryType type, std::string product, std::string timestamp);
         /** 
          * Retrieves the earliest timeframe in the simulation 
          */
@@ -39,7 +41,7 @@ class orderBook {
          * Returns the lowest price in the current timeframe 
          */
         static double getLowPrice(std::vector<orderBookEntry>& orders);
-        
+        std::vector<orderBookEntry> matchAsksToBids(std::string product, std::string timestamp);
 
     private:
         std::vector<orderBookEntry> orders;

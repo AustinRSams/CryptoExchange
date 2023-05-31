@@ -1,7 +1,7 @@
 
 #include "orderBookEntry.h"
 
-orderBookEntry::orderBookEntry(std::string _timestamp, std::string _product, orderBookType _type, double _price, double _quantity)
+orderBookEntry::orderBookEntry(std::string _timestamp, std::string _product, orderBookEntryType _type, double _price, double _quantity)
 : timestamp(_timestamp), 
   product(_product),
   type(_type),
@@ -11,17 +11,21 @@ orderBookEntry::orderBookEntry(std::string _timestamp, std::string _product, ord
 
 };
 
-orderBookType orderBookEntry::str_to_OBE_type(std::string& s) {
+orderBookEntryType orderBookEntry::str_to_OBE_type(std::string& s) {
   if (s == "ask") {
-    return orderBookType::ask;
+    return orderBookEntryType::ask;
   }
   else if (s == "bid") {
-    return orderBookType::bid;
+    return orderBookEntryType::bid;
   }
   else {
-    return orderBookType::max_obe_num;
+    return orderBookEntryType::max_obe_num;
   }
 }
+
+// static bool compareByTimestamp(orderBookEntry& obe1, orderBookEntry& obe2) {
+  // return (obe1.getTimestamp() < obe2.getTimestamp());
+// }
 
 double orderBookEntry::getPrice() {
   return price;
@@ -39,6 +43,14 @@ std::string orderBookEntry::getProduct() {
   return product;
 }
 
-orderBookType orderBookEntry::getType() {
+orderBookEntryType orderBookEntry::getType() {
   return type;
+}
+
+void orderBookEntry::setPrice(double price) {
+  this->price = price;
+}
+
+void orderBookEntry::setQty(double qty) {
+  this->qty = qty;
 }

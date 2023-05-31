@@ -52,9 +52,24 @@ std::vector<std::string> csvReader::tokenize(std::string csvLine, char delimitor
     return tokens;
 }
 
+orderBookEntry csvReader::strs_to_OBE(std::string timestamp, std::string product, orderBookEntryType type, std::string priceStr, std::string quantityStr) {
+    double price, qty;
+
+    try {
+        price = std::stod(priceStr);
+        qty = std::stod(quantityStr);
+    }
+    catch (const std::exception& e) {
+        throw;
+    }
+
+    orderBookEntry obe{timestamp, product, type, price, qty};
+    return obe;
+}
+
 orderBookEntry csvReader::strs_to_OBE(std::vector<std::string> tokens) {
     double price, amount;
-    orderBookType type;
+    orderBookEntryType type;
     if (tokens.size() != 5) {
         std::cout << "Bad line" << std::endl;
         throw std::exception{};

@@ -14,12 +14,13 @@ class MainMenu {
         void printMenu();
         void printHelp();
         void printMarketStats();
-        void enterOffer() ;
+        void enterAsk() ;
         void enterBid();
         void printWallet();
         void gotoNextTimeframe();
         int getUserOption();
         void processUserOption(int userOption);
-        orderBook orderBook{"../20200317.csv"};
+        // orderBook orderBook{"../20200317.csv"};
+        orderBook orderBook{"../test_data.csv"};
         std::string currentTime;
 };
